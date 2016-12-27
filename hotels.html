@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+
+	</style>
+</head>
+<body>
+<div class="sample"></div>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script>
+	
+$(document).ready(function(){
+	//https://www.cleartrip.com/hotels/jsonservice/hotel-content?city=Bangalore&state=Karnataka&country=IN&op=true&pahCCRequired=true
+	var detail;
+	var im;
+	$.ajax({
+		url:'https://www.cleartrip.com/hotels/jsonservice/hotel-content?city=Bangalore&state=Karnataka&country=IN&op=true&pahCCRequired=true',
+		success:function(data){
+			$('.sample').append("<h1>"+data['cnm']+"</h1>");
+			//console.log(data['ht']);
+			for(var x=0;x<data['ht'].length;x++){
+				//console.log(data['ht'][x]);
+				detail=data['ht'][x];
+				im=detail['im'];
+				im=im.replace("tn", "200x200");
+				//console.log(detail['id'],detail['id'].slice(0, 4));
+				im="https://ui.cltpstatic.com/places/hotels/"+detail['id'].slice(0, 4)+"/"+detail['id']+"/images/"+im;
+				console.log(im);
+				$('.sample').append("<div><h3>"+detail['nm']+"</h3>"+"<h4>"+detail['ar']+"</h4>"+"<h6>Rating:"+detail['sr']+"</h6>"+"<p>"+detail['ad']+"</p>"+"<img src='"+im+"'>"+"</div>");
+			}
+		}
+	});
+});
+
+</script>
+</body>
+</html>
